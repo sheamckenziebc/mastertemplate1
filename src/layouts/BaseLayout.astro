@@ -1,0 +1,163 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+
+// Load configuration
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+  noindex?: boolean;
+}
+
+const { 
+  title = config.site.title, 
+  description = config.site.description,
+  ogImage = config.seo.og_image,
+  canonicalURL = Astro.url.href,
+  noindex = false
+} = Astro.props;
+
+const fullTitle = title === config.site.title ? title : `${title} | ${config.site.title}`;
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content={description} />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  
+  <!-- SEO Meta Tags -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content={config.seo.keywords.join(', ')} />
+  <meta name="author" content={config.site.author} />
+  <link rel="canonical" href={canonicalURL} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+  <meta property="og:site_name" content={config.site.title} />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content={config.seo.twitter_card} />
+  <meta name="twitter:url" content={canonicalURL} />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+  
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": config.site.title,
+      "description": config.site.description,
+      "url": config.site.url,
+      "logo": new URL(config.branding.logo, Astro.site).href,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": config.contact.phone,
+        "contactType": "Customer Service",
+        "email": config.contact.email
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": config.contact.address
+      },
+      "sameAs": [
+        config.social.facebook,
+        config.social.twitter,
+        config.social.instagram,
+        config.social.linkedin
+      ].filter(Boolean)
+    }
+  </script>
+  
+  <!-- Critical CSS Variables -->
+  <style>
+    :root {
+      --color-primary: {config.branding.primaryColor};
+      --color-secondary: {config.branding.secondaryColor};
+      --color-accent: {config.branding.accentColor};
+      --font-family: {config.branding.fontFamily};
+    }
+    
+    /* Critical CSS for faster rendering */
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Skip link for accessibility */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: #000;
+      color: #fff;
+      padding: 8px;
+      text-decoration: none;
+      z-index: 1000;
+    }
+    
+    .skip-link:focus {
+      top: 6px;
+    }
+  </style>
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  
+  <!-- Analytics (if enabled) -->
+  {config.integrations.google_analytics && (
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${config.integrations.google_analytics}`}></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', config.integrations.google_analytics);
+    </script>
+  )}
+</head>
+
+<body>
+  <!-- Skip Navigation Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Header -->
+  <header>
+    <slot name="header" />
+  </header>
+  
+  <!-- Main Content -->
+  <main id="main-content">
+    <slot />
+  </main>
+  
+  <!-- Footer -->
+  <footer>
+    <slot name="footer" />
+  </footer>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
+</body>
+</html> 

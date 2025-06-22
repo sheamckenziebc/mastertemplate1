@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+
+// Load configuration
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+---
+
+<BaseLayout title={`About Us | ${config.site.title}`} description={`Learn more about ${config.site.title} and our commitment to excellence.`}>
+  <Header slot="header" />
+  
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          About {config.site.title}
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Discover our story, values, and the team that makes it all possible.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Story -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Our Story
+          </h2>
+          <p class="text-lg text-gray-600 mb-6">
+            Founded with a vision to provide exceptional service and quality products, {config.site.title} has grown from humble beginnings to become a trusted name in our industry. We believe in building lasting relationships with our customers through transparency, reliability, and unwavering commitment to excellence.
+          </p>
+          <p class="text-lg text-gray-600 mb-6">
+            Our journey began when we recognized a gap in the market for truly personalized service. We set out to create a company that would prioritize customer satisfaction above all else, and that principle continues to guide everything we do today.
+          </p>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="text-center p-4 bg-blue-50 rounded-lg">
+              <div class="text-2xl font-bold text-blue-600 mb-2">5+</div>
+              <div class="text-sm text-gray-600">Years Experience</div>
+            </div>
+            <div class="text-center p-4 bg-blue-50 rounded-lg">
+              <div class="text-2xl font-bold text-blue-600 mb-2">100+</div>
+              <div class="text-sm text-gray-600">Happy Customers</div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <img 
+            src="/assets/about-story.jpg" 
+            alt="Our company story"
+            class="rounded-lg shadow-lg w-full h-96 object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Values -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Our Mission & Values
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          We're driven by core principles that shape everything we do.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Mission -->
+        <div class="text-center p-8 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Our Mission</h3>
+          <p class="text-gray-600">
+            To deliver exceptional value and service that exceeds our customers' expectations while building lasting partnerships based on trust and reliability.
+          </p>
+        </div>
+        
+        <!-- Quality -->
+        <div class="text-center p-8 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Quality First</h3>
+          <p class="text-gray-600">
+            We never compromise on quality. Every product and service we deliver meets the highest standards and is backed by our satisfaction guarantee.
+          </p>
+        </div>
+        
+        <!-- Innovation -->
+        <div class="text-center p-8 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Innovation</h3>
+          <p class="text-gray-600">
+            We continuously evolve and improve our offerings, staying ahead of industry trends to provide cutting-edge solutions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Meet Our Team
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          The talented individuals who make our company great.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="text-center bg-gray-50 p-8 rounded-lg">
+          <div class="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">John Smith</h3>
+          <p class="text-blue-600 font-medium mb-4">Founder & CEO</p>
+          <p class="text-gray-600 text-sm">
+            John founded the company with a vision to revolutionize customer service in our industry. With over 15 years of experience, he leads our team with passion and expertise.
+          </p>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="text-center bg-gray-50 p-8 rounded-lg">
+          <div class="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Sarah Johnson</h3>
+          <p class="text-blue-600 font-medium mb-4">Operations Manager</p>
+          <p class="text-gray-600 text-sm">
+            Sarah ensures our operations run smoothly and efficiently. Her attention to detail and organizational skills keep everything on track and our customers happy.
+          </p>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="text-center bg-gray-50 p-8 rounded-lg">
+          <div class="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Mike Davis</h3>
+          <p class="text-blue-600 font-medium mb-4">Customer Success</p>
+          <p class="text-gray-600 text-sm">
+            Mike is dedicated to ensuring every customer has an exceptional experience. His friendly approach and problem-solving skills make him a valuable team member.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-20 bg-blue-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        Ready to Work With Us?
+      </h2>
+      <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+        We'd love to hear about your project and discuss how we can help you achieve your goals.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href="/contact" 
+          class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+        >
+          Get in Touch
+        </a>
+        <a 
+          href={`tel:${config.contact.phone}`} 
+          class="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+        >
+          Call Us Today
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": config.site.title,
+    "description": config.site.description,
+    "url": config.site.url,
+    "logo": new URL(config.branding.logo, Astro.site).href,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": config.contact.phone,
+      "contactType": "Customer Service",
+      "email": config.contact.email
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": config.contact.address
+    }
+  }
+}
+</script> 

@@ -1,0 +1,49 @@
+# AI Jamstack Template Configuration
+# This file contains all the key settings that an AI agent should populate
+
+site:
+  title: "Your Business Name"
+  description: "Brief description of your business and services"
+  url: "https://yourusername.github.io/your-repo-name"
+  author: "Your Name"
+  
+branding:
+  logo: "/assets/logo.png"
+  primaryColor: "#2563eb"
+  secondaryColor: "#1e40af"
+  accentColor: "#f59e0b"
+  fontFamily: "Inter, system-ui, sans-serif"
+  
+contact:
+  email: "contact@yourbusiness.com"
+  phone: "+1 (555) 123-4567"
+  address: "123 Main St, Your City, State 12345"
+  businessHours: "Mon-Fri 9AM-5PM"
+  
+social:
+  facebook: ""
+  twitter: ""
+  instagram: ""
+  linkedin: ""
+  youtube: ""
+  
+features:
+  blog: true
+  products: true
+  testimonials: true
+  faq: true
+  search: false
+  comments: false
+  analytics: false
+  
+integrations:
+  formspree_id: "your-formspree-id"
+  google_analytics: ""
+  map_coordinates:
+    lat: 40.7128
+    lng: -74.0060
+    
+seo:
+  keywords: ["your", "business", "keywords"]
+  og_image: "/assets/og-image.jpg"
+  twitter_card: "summary_large_image" 

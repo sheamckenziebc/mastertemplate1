@@ -1,0 +1,170 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+import Breadcrumbs from './Breadcrumbs.astro';
+
+// Load configuration
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center space-x-2" aria-label="Home">
+          <img 
+            src={config.branding.logo} 
+            alt={`${config.site.title} logo`}
+            class="h-8 w-auto"
+            width="32"
+            height="32"
+          />
+          <span class="text-xl font-bold text-gray-900">{config.site.title}</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-8" aria-label="Main navigation">
+        <ul class="flex space-x-8" role="menubar">
+          <li role="none">
+            <a 
+              href="/" 
+              class={`text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors ${currentPath === '/' ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+              role="menuitem"
+              aria-current={currentPath === '/' ? 'page' : undefined}
+            >
+              Home
+            </a>
+          </li>
+          <li role="none">
+            <a 
+              href="/about" 
+              class={`text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors ${currentPath === '/about' ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+              role="menuitem"
+              aria-current={currentPath === '/about' ? 'page' : undefined}
+            >
+              About
+            </a>
+          </li>
+          {config.features.products && (
+            <li role="none">
+              <a 
+                href="/products" 
+                class={`text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors ${currentPath.startsWith('/products') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                role="menuitem"
+                aria-current={currentPath.startsWith('/products') ? 'page' : undefined}
+              >
+                Products
+              </a>
+            </li>
+          )}
+          {config.features.blog && (
+            <li role="none">
+              <a 
+                href="/blog" 
+                class={`text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors ${currentPath.startsWith('/blog') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                role="menuitem"
+                aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}
+              >
+                Blog
+              </a>
+            </li>
+          )}
+          <li role="none">
+            <a 
+              href="/contact" 
+              class={`text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors ${currentPath === '/contact' ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+              role="menuitem"
+              aria-current={currentPath === '/contact' ? 'page' : undefined}
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          type="button"
+          class="text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-2"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle mobile menu"
+          id="mobile-menu-button"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+        <a 
+          href="/" 
+          class={`block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 ${currentPath === '/' ? 'text-blue-600 bg-blue-50' : ''}`}
+          aria-current={currentPath === '/' ? 'page' : undefined}
+        >
+          Home
+        </a>
+        <a 
+          href="/about" 
+          class={`block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 ${currentPath === '/about' ? 'text-blue-600 bg-blue-50' : ''}`}
+          aria-current={currentPath === '/about' ? 'page' : undefined}
+        >
+          About
+        </a>
+        {config.features.products && (
+          <a 
+            href="/products" 
+            class={`block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 ${currentPath.startsWith('/products') ? 'text-blue-600 bg-blue-50' : ''}`}
+            aria-current={currentPath.startsWith('/products') ? 'page' : undefined}
+          >
+            Products
+          </a>
+        )}
+        {config.features.blog && (
+          <a 
+            href="/blog" 
+            class={`block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 ${currentPath.startsWith('/blog') ? 'text-blue-600 bg-blue-50' : ''}`}
+            aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}
+          >
+            Blog
+          </a>
+        )}
+        <a 
+          href="/contact" 
+          class={`block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 ${currentPath === '/contact' ? 'text-blue-600 bg-blue-50' : ''}`}
+          aria-current={currentPath === '/contact' ? 'page' : undefined}
+        >
+          Contact
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumbs (for non-home pages) -->
+  {currentPath !== '/' && <Breadcrumbs />}
+</header>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script> 
