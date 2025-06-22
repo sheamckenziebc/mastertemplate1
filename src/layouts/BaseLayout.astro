@@ -85,12 +85,17 @@ const fullTitle = title === config.site.title ? title : `${title} | ${config.sit
   </script>
   
   <!-- Critical CSS Variables -->
-  <style>
+  <style define:vars={{ 
+    primaryColor: config.branding.primaryColor,
+    secondaryColor: config.branding.secondaryColor,
+    accentColor: config.branding.accentColor,
+    fontFamily: config.branding.fontFamily
+  }}>
     :root {
-      --color-primary: {config.branding.primaryColor};
-      --color-secondary: {config.branding.secondaryColor};
-      --color-accent: {config.branding.accentColor};
-      --font-family: {config.branding.fontFamily};
+      --color-primary: var(--primaryColor);
+      --color-secondary: var(--secondaryColor);
+      --color-accent: var(--accentColor);
+      --font-family: var(--fontFamily);
     }
     
     /* Critical CSS for faster rendering */
